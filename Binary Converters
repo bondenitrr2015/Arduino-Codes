@@ -1,0 +1,36 @@
+// This converts the number from 0-9 into binary and
+// then switch LED according to it
+
+void setup(){
+  // initialising pins 9...13
+  for(int i = 10; i <= 13; i++){
+    pinMode(i, OUTPUT);
+  }
+  Serial.begin(9600);
+}
+
+void loop(){
+  int num;
+  if(Serial.available()){
+    for(int i = 10; i<=13; i++){
+      digitalWrite(i, LOW);
+    }
+    num = Serial.read();
+    Serial.print(num);
+    num -= 48;
+    // because we have to convert from ASCII to actual number
+    Serial.print(num);
+    binaryConverter(num);
+  }
+}
+
+void binaryConverter(int n){
+  int counter = 0;
+  while(n != 0){
+    if(n%2 == 1){
+      digitalWrite(counter+10, HIGH);
+    }
+    counter++;
+    n /= 2;
+  }
+}
